@@ -51,7 +51,7 @@ This will run all the test cases in the project and show the test results.
 
 # Docker Compose
 
-To run the application using docker-compose, first make sure that you have Docker Compose installed. Then, you can run the existing docker-compose.yml file of this project with the following command:
+To run the application using docker-compose, first make sure that you have Docker Compose installed. Then, you can run the existing `docker-compose.yml` file of this project with the following command:
 
 ```
 docker-compose up
