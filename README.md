@@ -49,61 +49,12 @@ npm test
 
 This will run all the test cases in the project and show the test results.
 
-# Dockerfile
+# Docker Compose
 
-If you want to run the application in a Docker container, you can use the following Dockerfile:
-
-## Dockerfile
-
-```
-ARG NODE_VERSION=18.0.0
-
-FROM node:${NODE_VERSION}-alpine as build
-WORKDIR /opt
-
-COPY package.json yarn.lock tsconfig.json tsconfig.compile.json .barrelsby.json ./
-
-RUN yarn install --pure-lockfile
-
-COPY ./src ./src
-COPY ./scripts ./scripts
-
-RUN yarn build
-
-FROM node:${NODE_VERSION}-alpine as runtime
-ENV WORKDIR /opt
-WORKDIR $WORKDIR
-
-RUN apk update && apk add build-base git curl
-RUN npm install -g pm2
-
-COPY --from=build /opt .
-
-RUN yarn install --pure-lockfile --production
-
-COPY ./views ./views
-COPY processes.config.js .
-
-EXPOSE 3000
-ENV PORT 3000
-ENV NODE_ENV production
-ENV DB_DEFAULT_URL mongodb://mongodb:27017/newsdb
-
-CMD ["yarn", "start:prod"]
-```
-
-To build a Docker image using this Dockerfile, navigate to the root of the project and run the following command:
-
-```
-docker build -t my-app .
-```
-
-## docker-compose
-
-To run the application using docker-compose, first make sure that you have Docker Compose installed. Then, you can run the existing docker-compose.yml file of this project.
+To run the application using docker-compose, first make sure that you have Docker Compose installed. Then, you can run the existing docker-compose.yml file of this project with the following command:
 
 ```
 docker-compose up
 ```
 
-This will start the application and the MongoDB server in separate Docker containers, and the app will be available on http://localhost:8083.
+This will build and start the application and the MongoDB server in separate Docker containers, and the app will be available on http://localhost:8083.
