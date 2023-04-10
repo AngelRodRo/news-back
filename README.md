@@ -51,7 +51,7 @@ This will run all the test cases in the project and show the test results.
 
 If you want to run the application in a Docker container, you can use the following Dockerfile:
 
-Dockerfile
+## Dockerfile
 
 ```
 ARG NODE_VERSION=18.0.0
@@ -95,3 +95,13 @@ To build a Docker image using this Dockerfile, navigate to the root of the proje
 ```
 docker build -t my-app .
 ```
+
+## docker-compose
+
+To run the application using docker-compose, first make sure that you have Docker Compose installed. Then, you can run the existing docker-compose.yml file of this project.
+
+```
+docker-compose up
+```
+
+This will start the application and the MongoDB server in separate Docker containers, and the app will be available on http://localhost:8083.
