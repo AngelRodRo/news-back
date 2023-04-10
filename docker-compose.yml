@@ -1,0 +1,33 @@
+version: '3.5'
+services:
+  server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    image: backend-exam-v2/server:latest
+    restart: always
+    ports:
+      - '8083:3000'
+    depends_on:
+      - mongodb
+    environment:
+      WAIT_HOSTS: mongodb:27017
+    networks:
+      - node-webapp-network
+  mongodb:
+    container_name: mongodb
+    image: mongo:6
+    restart: always
+    volumes:
+      - ~/mongo:/data/db
+    ports:
+      - '27017:27017'
+    networks:
+      - node-webapp-network
+networks:
+  node-webapp-network:
+    driver: bridge
