@@ -12,6 +12,8 @@ X_RAPIDAPI_KEY=xxxxx
 X_RAPIDAPI_HOST=xxxxx
 ```
 
+Note: `X_RAPIDAPI_KEY` and `X_RAPIDAPI_HOST` has to match with the same variables declared on the .env of the frontend project.
+
 Then you can run the following command:
 
 ```
