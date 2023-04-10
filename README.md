@@ -26,7 +26,7 @@ This will install all the necessary dependencies for the project. You can then s
 npm run start
 ```
 
-This will start the development server at http://localhost:5173. You can open this URL in your web browser to view the application.
+This will start the development server at http://localhost:8083. You can open this URL in your web browser to view the application.
 
 ## Building for Production
 
