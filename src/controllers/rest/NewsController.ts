@@ -1,6 +1,6 @@
 import {UseBefore} from "@tsed/platform-middlewares";
 import {Controller} from "@tsed/di";
-import {Get, Header, Property, Returns} from "@tsed/schema";
+import {Get, Header, Returns} from "@tsed/schema";
 import {QueryParams} from '@tsed/platform-params';
 import {BadRequest, InternalServerError} from "@tsed/exceptions";
 

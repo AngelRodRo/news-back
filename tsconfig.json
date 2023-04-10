@@ -31,7 +31,9 @@
     ]
   },
   "include": [
-    "src"
+    "src",
+    "scripts",
+    "jest.config.js"
   ],
   "linterOptions": {
     "exclude": []

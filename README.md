@@ -1,67 +1,97 @@
-<p style="text-align: center" align="center">
-  <a href="https://tsed.io" target="_blank"><img src="https://tsed.io/tsed-og.png" width="200" alt="Ts.ED logo"/></a>
-</p>
+# News App Backend
 
-<div align="center">
-  <h1>Ts.ED - backend-exam-v2</h1>
-  <br />
-  <div align="center">
-    <a href="https://cli.tsed.io/">Website</a>
-    <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-    <a href="https://cli.tsed.io/getting-started.html">Getting started</a>
-    <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-    <a href="https://api.tsed.io/rest/slack/tsedio/tsed">Slack</a>
-    <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-    <a href="https://twitter.com/TsED_io">Twitter</a>
-  </div>
-  <hr />
-</div>
+## Getting Started
 
-> An awesome project based on Ts.ED framework
+Before running the application, you need to set some environment variables.
 
-## Getting started
-
-> **Important!** Ts.ED requires Node >= 14, Express >= 4 and TypeScript >= 4.
-
-```batch
-# install dependencies
-$ yarn install
-
-# serve
-$ yarn start
-
-# build for production
-$ yarn build
-$ yarn start:prod
-```
-
-## Docker
+Create an .env file in the root of the project with the following variables:
 
 ```
-# build docker image
-docker compose build
-
-# start docker image
-docker compose up
+DB_DEFAULT_URL=xxxxx
+X_RAPIDAPI_KEY=xxxxx
+X_RAPIDAPI_HOST=xxxxx
 ```
 
-## Barrelsby
+Then you can run the following command:
 
-This project uses [barrelsby](https://www.npmjs.com/package/barrelsby) to generate index files to import the controllers.
+```
+npm install
+```
 
-Edit `.barreslby.json` to customize it:
+This will install all the necessary dependencies for the project. You can then start the development server by running:
 
-```json
-{
-  "directory": [
-    "./src/controllers/rest",
-    "./src/controllers/pages"
-  ],
-  "exclude": [
-    "__mock__",
-    "__mocks__",
-    ".spec.ts"
-  ],
-  "delete": true
-}
+```
+npm run start
+```
+
+This will start the development server at http://localhost:5173. You can open this URL in your web browser to view the application.
+
+## Building for Production
+
+To build the project for production, run the following command:
+
+```
+npm run build
+npm run start:prod
+```
+
+This will create a build of the project in the build directory and run it.
+
+## Testing
+
+To run the test suite for this project, run the following command:
+
+```
+npm test
+```
+
+This will run all the test cases in the project and show the test results.
+
+# Dockerfile
+
+If you want to run the application in a Docker container, you can use the following Dockerfile:
+
+Dockerfile
+
+```
+ARG NODE_VERSION=18.0.0
+
+FROM node:${NODE_VERSION}-alpine as build
+WORKDIR /opt
+
+COPY package.json yarn.lock tsconfig.json tsconfig.compile.json .barrelsby.json ./
+
+RUN yarn install --pure-lockfile
+
+COPY ./src ./src
+COPY ./scripts ./scripts
+
+RUN yarn build
+
+FROM node:${NODE_VERSION}-alpine as runtime
+ENV WORKDIR /opt
+WORKDIR $WORKDIR
+
+RUN apk update && apk add build-base git curl
+RUN npm install -g pm2
+
+COPY --from=build /opt .
+
+RUN yarn install --pure-lockfile --production
+
+COPY ./views ./views
+COPY processes.config.js .
+
+EXPOSE 3000
+ENV PORT 3000
+ENV NODE_ENV production
+ENV DB_DEFAULT_URL mongodb://mongodb:27017/newsdb
+
+CMD ["yarn", "start:prod"]
+```
+
+To build a Docker image using this Dockerfile, navigate to the root of the project and run the following command:
+
+```
+docker build -t my-app .
 ```

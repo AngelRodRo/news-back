@@ -1,5 +1,5 @@
 import {Property} from "@tsed/schema";
-import {Model, ObjectID, MongooseIndex} from "@tsed/mongoose";
+import {Model, ObjectID} from "@tsed/mongoose";
 
 @Model({ name: "keys" })
 export class KeysModel {

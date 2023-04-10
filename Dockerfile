@@ -31,5 +31,4 @@ ENV PORT 3000
 ENV NODE_ENV production
 ENV DB_DEFAULT_URL mongodb://mongodb:27017/newsdb
 
-
 CMD ["yarn", "start:prod"]
